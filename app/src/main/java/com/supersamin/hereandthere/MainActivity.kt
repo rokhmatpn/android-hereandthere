@@ -136,24 +136,12 @@ class CatItem(val density: Int, val category: CatModel): Item<GroupieViewHolder>
 
                 // check if there is any childs
                 val isChildChecked = checkChildsChecked(cat.Id)
-                Log.d("childs-result","${isChildChecked.toString()}")
                 if (isChildChecked) {
                     Toast.makeText(it.context, "There are some childs that are still checked", Toast.LENGTH_LONG).show()
                     it.valueCheckBox.isChecked = true
                 } else {
                     MainActivity.Categories[cat.position].isSelected = false
                 }
-
-//                val childView: ViewGroup?
-//                childView = MainActivity.recyclerContext.findViewWithTag<ViewGroup>(cat.Id)
-//                while (childView != null) {
-//                    childView.valueCheckBox.isChecked = it.valueCheckBox.isChecked
-//
-//                    val parentTag = childView.valueCheckBox.tag as CatModel
-//                    Log.d("test parent tag", "${parentTag.ParentId}")
-//                    childView =
-//                        MainActivity.recyclerContext.findViewWithTag<ViewGroup>(parentTag.ParentId)
-//                }
             }
         }
     }
@@ -162,16 +150,13 @@ class CatItem(val density: Int, val category: CatModel): Item<GroupieViewHolder>
         var isChildChecked: Boolean = false
         MainActivity.Categories.filter { it.ParentId == id }.forEach {
             isChildChecked = it.isSelected
-            Log.d("childs","${it.Name} checked ${it.isSelected.toString()}")
 
             if (isChildChecked) {
                 return isChildChecked
-                Log.d("childs","stop disini")
             } else {
                 return checkChildsChecked(it.Id)
             }
         }
-        Log.d("childs","hasilnya adalah ${isChildChecked.toString()}")
         return isChildChecked
     }
 
